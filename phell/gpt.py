@@ -5,10 +5,16 @@
 # See LICENSE comming with the source of 'phell' for details.
 #
 
+import uuid
+
+from phell.utils import to_int, from_hex
+
 
 class Gpt(object):
 
     SIZE = 512
+    EFI_SIGNATURE = from_hex("4546492050415254")
+    EFI_REVISION = from_hex("00000100")
 
     SIGNATURE_START = 0
     SIGNATURE_SIZE = 8
@@ -70,17 +76,37 @@ class Gpt(object):
         self.data = data
         self.signature = data[Gpt.SIGNATURE_START:Gpt.SIGNATURE_END]
         self.revision = data[Gpt.REVISION_START:Gpt.REVISION_END]
-        self.header_size = data[Gpt.HEADER_SIZE_START:Gpt.HEADER_SIZE_END]
+        self.header_size = to_int(data[
+            Gpt.HEADER_SIZE_START:Gpt.HEADER_SIZE_END])
         self.header_crc = data[Gpt.HEADER_CRC_START:Gpt.HEADER_CRC_END]
-        self.current_lba = data[Gpt.CURRENT_LBA_START:Gpt.CURRENT_LBA_END]
-        self.backup_lba = data[Gpt.BACKUP_LBA_START:Gpt.BACKUP_LBA_END]
-        self.first_lba = data[Gpt.FIRST_LBA_START:Gpt.FIRST_LBA_END]
-        self.last_lba = data[Gpt.LAST_LBA_START:Gpt.LAST_LBA_END]
-        self.guid = data[Gpt.GUID_START:Gpt.GUID_END]
-        self.nr_entries = data[Gpt.NUMBER_ENTRIES_START:Gpt.NUMBER_ENTRIES_END]
-        self.entry_size = data[Gpt.ENTRY_SIZE_START:Gpt.ENTRY_SIZE_END]
+        self.current_lba = to_int(data[
+            Gpt.CURRENT_LBA_START:Gpt.CURRENT_LBA_END])
+        self.backup_lba = to_int(data[
+            Gpt.BACKUP_LBA_START:Gpt.BACKUP_LBA_END])
+        self.first_lba = to_int(data[
+            Gpt.FIRST_LBA_START:Gpt.FIRST_LBA_END])
+        self.last_lba = to_int(data[
+            Gpt.LAST_LBA_START:Gpt.LAST_LBA_END])
+        self.guid = uuid.UUID(bytes_le=data[Gpt.GUID_START:Gpt.GUID_END])
+        self.start_lba = to_int(data[
+            Gpt.STARTING_LBA_START:Gpt.STARTING_LBA_END])
+        self.nr_entries = to_int(data[
+            Gpt.NUMBER_ENTRIES_START:Gpt.NUMBER_ENTRIES_END])
+        self.entry_size = to_int(data[
+            Gpt.ENTRY_SIZE_START:Gpt.ENTRY_SIZE_END])
         self.partitions_crc = \
             data[Gpt.PARTITIONS_CRC_START:Gpt.PARTITIONS_CRC_END]
+
+    def is_valid(self):
+        # todo:
+        #  - Check the Signature
+        #  - Check the Header CRC
+        #  - Check that the current LBA entry points to the LBA that contains
+        #    the GUID Partition Table
+        #  - Check the CRC of the GUID Partition Entry Array
+        # If the GPT is the primary table, stored at LBA 1:
+        #  - Check the Backup LBA to see if it is a valid GPT
+        return True
 
 
 class GptPartition(object):
