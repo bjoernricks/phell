@@ -70,14 +70,38 @@ class MbrPartition(object):
         LINUX_LVM_OLD_TYPE: "Linux (old LVM)",
     }
 
+    STATUS_START = 0
+    STATUS_SIZE = 1
+    STATUS_END = STATUS_START + STATUS_SIZE
+
+    CHS_START_START = STATUS_END
+    CHS_START_SIZE = 3
+    CHS_START_END = CHS_START_START + CHS_START_SIZE
+
+    TYPE_START = CHS_START_END
+    TYPE_SIZE = 1
+    TYPE_END = TYPE_START + TYPE_SIZE
+
+    CHS_END_START = TYPE_END
+    CHS_END_SIZE = 3
+    CHS_END_END = CHS_END_START + CHS_END_SIZE
+
+    LBA_START = CHS_END_END
+    LBA_SIZE = 4
+    LBA_END = LBA_START + LBA_SIZE
+
+    SECTORS_START = LBA_END
+    SECTORS_SIZE = 4
+    SECTORS_END = SECTORS_START + SECTORS_SIZE
+
     def __init__(self, data):
         self.data = data
-        self.status = data[0:1]
-        self.chs_start = (data[1:2], data[2:3], data[3:4])
-        self.type = data[4:5]
-        self.chs_end = (data[5:6], data[6:7], data[7:8])
-        self.lba = data[8:12]
-        self.sectors = data[12:16]
+        self.status = data[self.STATUS_START:self.STATUS_END]
+        self.chs_start = data[self.CHS_START_START:self.CHS_START_END]
+        self.type = data[self.TYPE_START:self.TYPE_END]
+        self.chs_end = data[self.CHS_END_START:self.CHS_END_END]
+        self.lba = data[self.LBA_START:self.LBA_END]
+        self.sectors = data[self.SECTORS_START:self.SECTORS_END]
 
     def is_bootable(self):
         return self.status == MbrPartition.STATUS_BOOTABLE
