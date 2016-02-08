@@ -18,6 +18,7 @@ def from_hex(value):
         return value.decode('hex')
     return bytes.fromhex(value)
 
+
 def swap_bytes(value):
     if sys.version_info.major < 3:
         return "".join([bytes(b) for b in reversed(value)])
