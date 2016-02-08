@@ -31,10 +31,10 @@ class MbrPartition(object):
     LINUX_LVM_TYPE = from_hex("8e")
     BSD_TYPE = from_hex("a5")
     OPENBSD_TYPE = from_hex("a6")
-    MAX_OS_UFS_TYPE = from_hex("a8")
+    MAC_OS_UFS_TYPE = from_hex("a8")
     NETBSD_TYPE = from_hex("a9")
-    MAX_OS_BOOT_TYPE = from_hex("ab")
-    MAX_OS_HFS_TYPE = from_hex("af")
+    MAC_OS_BOOT_TYPE = from_hex("ab")
+    MAC_OS_HFS_TYPE = from_hex("af")
     LINUX_LUKS_TYPE = from_hex("e8")
     GPT_TYPE = from_hex("ee")
     EFI_TYPE = from_hex("ef")
@@ -60,10 +60,10 @@ class MbrPartition(object):
         LINUX_LVM_TYPE: "Linux (LVM)",
         BSD_TYPE: "BSD",
         OPENBSD_TYPE: "OpenBSD",
-        MAX_OS_UFS_TYPE: "Max OS X (UFS)",
+        MAC_OS_UFS_TYPE: "Mac OS X (UFS)",
         NETBSD_TYPE: "NetBSD",
-        MAX_OS_BOOT_TYPE: "Max OS X (boot)",
-        MAX_OS_HFS_TYPE: "Mac OS X (HFS/HFS+)",
+        MAC_OS_BOOT_TYPE: "Mac OS X (boot)",
+        MAC_OS_HFS_TYPE: "Mac OS X (HFS/HFS+)",
         LINUX_LUKS_TYPE: "Linux (LUKS)",
         GPT_TYPE: "GPT Protected MBR",
         EFI_TYPE: "EFI System Patition",
