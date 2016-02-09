@@ -11,6 +11,7 @@ from phell.utils import to_hex, from_hex
 class MbrPartition(object):
 
     STATUS_BOOTABLE = from_hex("80")
+    LBA_SIZE = 512
 
     EMPTY_TYPE = from_hex("00")
     FAT12_TYPE = from_hex("01")
