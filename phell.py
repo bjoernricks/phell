@@ -17,6 +17,7 @@ from phell.gpt import Gpt, GptPartition
 
 def main():
     if len(sys.argv) < 2:
+        print("Please provide a path to a disk")
         sys.exit(1)
 
     disk = sys.argv[1]
