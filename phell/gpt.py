@@ -155,6 +155,7 @@ class GptPartition(object):
     LINUX_HOME_TYPE = uuid.UUID("933AC7E1-2EB4-4F13-B844-0E14E2AEF915")
     LINUX_DMCRYPT_TYPE = uuid.UUID("7FFEC5C9-2D00-49B7-8941-3EA10A5586B7")
     LINUX_LUKS_TYPE = uuid.UUID("CA7D7CCB-63ED-4C53-861C-1742536059CC")
+    MS_DATA_PARTITION_TYPE = uuid.UUID("EBD0A0A2-B9E5-4433-87C0-68B6B72699C7")
 
     partition_types = {
         EFI_SYSTEM_TYPE: "EFI System Partition",
@@ -175,6 +176,7 @@ class GptPartition(object):
         LINUX_HOME_TYPE: "Linux /home",
         LINUX_DMCRYPT_TYPE: "Linux dm-crypt",
         LINUX_LUKS_TYPE: "Linux LUKS",
+        MS_DATA_PARTITION_TYPE: "MS Data Partition",
     }
 
     def __init__(self, data):
